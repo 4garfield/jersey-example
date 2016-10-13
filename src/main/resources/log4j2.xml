@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration monitorInterval="30" status="DEBUG" strict="true">
+	<Properties>
+		<Property name="logPath">/tmp/jersey-example</Property>
+		<Property name="consolePattern">%m%n</Property>
+		<Property name="logFilePattern">[%d{dd-MMM-yyyy HH:mm:ss,SSS}] [%-5level] [%thread] %logger{36}(%class:%line) %msg %n</Property>
+	</Properties>
+	
+	<Appenders>
+		<Appender type="Console" name="systemOut">
+			<Layout type="PatternLayout" pattern="${consolePattern}"/>
+		</Appender>
+		
+		<Appender type="RollingFile" name="rollingFile" fileName="${logPath}/app.log" 
+			filePattern="${logPath}/app-%d{yyyy-MM-dd}-%i.log">
+			<Layout type="PatternLayout" pattern="${logFilePattern}"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="50"/>
+		</Appender>
+	</Appenders>
+	
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="rollingFile"/>
+			<AppenderRef ref="systemOut" level="info"/>
+		</Root>
+	</Loggers>
+</Configuration>
